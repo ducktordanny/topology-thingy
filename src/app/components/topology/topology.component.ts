@@ -22,6 +22,7 @@ import {
   TopologyNode,
   TopologyNodes,
 } from './topology.type';
+import { getTopologyNodesById } from './topology-nodes-by-id.util';
 
 @Component({
   selector: 'app-topology',
@@ -161,33 +162,24 @@ export class TopologyComponent implements AfterViewInit, OnDestroy {
 
   private drawLinkLines(): void {
     if (this.linkLines === null) return;
-    const nodesById = new Map(
-      this.nodes().map((node) => {
-        const { id, ...nodeData } = node;
-        return [id, nodeData];
-      }),
-    );
+    const nodesById = getTopologyNodesById(this.nodes());
 
     this.linkLines
       .attr(
         'x1',
-        (data) =>
-          nodesById.get(data.source)!.position.x + this.nodeCenterOffset.x,
+        (data) => nodesById[data.source].position.x + this.nodeCenterOffset.x,
       )
       .attr(
         'y1',
-        (data) =>
-          nodesById.get(data.source)!.position.y + this.nodeCenterOffset.y,
+        (data) => nodesById[data.source].position.y + this.nodeCenterOffset.y,
       )
       .attr(
         'x2',
-        (data) =>
-          nodesById.get(data.target)!.position.x + this.nodeCenterOffset.x,
+        (data) => nodesById[data.target].position.x + this.nodeCenterOffset.x,
       )
       .attr(
         'y2',
-        (data) =>
-          nodesById.get(data.target)!.position.y + this.nodeCenterOffset.y,
+        (data) => nodesById[data.target].position.y + this.nodeCenterOffset.y,
       );
   }
 

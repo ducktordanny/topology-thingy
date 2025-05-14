@@ -107,6 +107,8 @@ export class TopologyComponent implements AfterViewInit, OnDestroy {
       .classed('node-rect', true)
       .attr('width', this.nodeSize().width)
       .attr('height', this.nodeSize().height)
+      .attr('rx', 8)
+      .attr('ry', 8)
       .on('click', (_event, data) => {
         this.nodeClick.emit(data);
       });

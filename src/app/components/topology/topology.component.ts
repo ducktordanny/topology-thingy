@@ -22,7 +22,8 @@ import {
   TopologyNode,
   TopologyNodes,
 } from './topology.type';
-import { getTopologyNodesById } from './topology-nodes-by-id.util';
+import { getTopologyNodesById } from './utils/topology-nodes-by-id.util';
+import { truncateSVGText } from './utils/truncate-text.util';
 
 @Component({
   selector: 'app-topology',
@@ -35,6 +36,7 @@ export class TopologyComponent implements AfterViewInit, OnDestroy {
   readonly nodes = input.required<TopologyNodes>();
   readonly links = input.required<TopologyLinks>();
   readonly nodeSize = input<NodeSize>({ width: 100, height: 60 });
+  readonly nodePadding = input<number>(8);
   readonly margin = input<number>(10);
   readonly nodeClick = output<TopologyNode>();
 
@@ -108,12 +110,25 @@ export class TopologyComponent implements AfterViewInit, OnDestroy {
       .on('click', (_event, data) => {
         this.nodeClick.emit(data);
       });
+    this.insertText(nodeRects);
+  }
+
+  private insertText(
+    nodeRects: Selection<SVGGElement, TopologyNode, SVGElement, unknown>,
+  ): void {
+    const that = this;
     nodeRects
       .append('text')
       .text((data) => data.id)
+      .each(function () {
+        const self = select(this);
+        truncateSVGText(self, that.nodeSize().width, that.nodePadding());
+      })
       .attr('x', this.nodeCenterOffset.x)
       .attr('y', this.nodeCenterOffset.y)
-      .classed('node-text', true);
+      .classed('node-text', true)
+      .append('title')
+      .text((data) => data.id);
   }
 
   private handleNodesDragging(): DragBehavior<

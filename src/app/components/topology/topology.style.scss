@@ -23,18 +23,19 @@ $drop-shadow-action: drop-shadow(2px 4px 6px rgba(0, 123, 255, 0.3));
     filter: $drop-shadow-action;
   }
 
-  .node-rect:hover {
+  .node-rect:hover,
+  .node-text:hover {
     cursor: pointer;
   }
 
-  .node-rect:active {
+  .node-rect:active,
+  .node-text:active {
     cursor: grabbing;
   }
 
   .node-text {
     text-anchor: middle;
     alignment-baseline: middle;
-    pointer-events: none;
   }
 
   .link {

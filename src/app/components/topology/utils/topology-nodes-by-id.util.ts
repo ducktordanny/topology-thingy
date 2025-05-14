@@ -1,4 +1,4 @@
-import { TopologyNode, TopologyNodes } from './topology.type';
+import { TopologyNode, TopologyNodes } from '../topology.type';
 
 type TopologyNodesById = Record<string, Omit<TopologyNode, 'id'>>;
 

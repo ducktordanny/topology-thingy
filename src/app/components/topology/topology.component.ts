@@ -23,7 +23,7 @@ import {
   TopologyNodes,
 } from './topology.type';
 import { getTopologyNodesById } from './utils/topology-nodes-by-id.util';
-import { truncateSVGText } from './utils/truncate-text.util';
+import { truncateSVGText } from './utils/truncate-svg-text.util';
 
 @Component({
   selector: 'app-topology',

@@ -1,0 +1,51 @@
+$rect-color: #fdfdfd;
+$rect-action-color: #f0f8ff;
+$stroke-color: #999;
+$stroke-action-color: #007bff;
+$drop-shadow: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.2));
+$drop-shadow-action: drop-shadow(2px 4px 6px rgba(0, 123, 255, 0.3));
+
+::ng-deep {
+  .node-rect {
+    fill: $rect-color;
+    stroke: $stroke-color;
+    stroke-width: 2px;
+    filter: $drop-shadow;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .node-rect:hover,
+  .node-rect:active {
+    fill: $rect-action-color;
+    stroke: $stroke-action-color;
+    filter: $drop-shadow-action;
+  }
+
+  .node-rect:hover {
+    cursor: pointer;
+  }
+
+  .node-rect:active,
+  .node-text:active {
+    cursor: grabbing;
+  }
+
+  .node-text {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    pointer-events: none;
+  }
+
+  .link {
+    stroke: $stroke-color;
+    stroke-width: 4px;
+    stroke-dasharray: 8, 8;
+    animation: dash-flow 1s linear infinite;
+  }
+
+  @keyframes dash-flow {
+    to {
+      stroke-dashoffset: -16;
+    }
+  }
+}

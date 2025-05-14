@@ -1,7 +1,3 @@
-export interface BaseTopologyNodeData {
-  name: string;
-}
-
 export interface Position {
   x: number;
   y: number;
@@ -12,9 +8,7 @@ export interface NodeSize {
   height: number;
 }
 
-export interface TopologyNode<
-  T extends BaseTopologyNodeData = BaseTopologyNodeData,
-> {
+export interface TopologyNode<T = object> {
   id: string;
   position: Position;
   data: T;

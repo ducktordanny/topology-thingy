@@ -1,6 +1,6 @@
 import { TopologyNode, TopologyNodes } from '../topology.type';
 
-type TopologyNodesById = Record<string, Omit<TopologyNode, 'id'>>;
+export type TopologyNodesById = Record<string, Omit<TopologyNode, 'id'>>;
 
 export function getTopologyNodesById(nodes: TopologyNodes): TopologyNodesById {
   return Object.fromEntries(

@@ -90,7 +90,6 @@ export class FakeApiService {
     newSource: string,
     newLink: TopologyLink | null,
   ): void {
-    if (!this._links().length && newLink) this._links.set([newLink]);
     this._links.update((links) =>
       links
         .map((link) => {
@@ -101,6 +100,7 @@ export class FakeApiService {
         })
         .filter((link) => !(link.source === newSource && newLink === null)),
     );
+    if (newLink) this._links.update((links) => [...links, newLink]);
   }
 
   removeNode(id: string): void {

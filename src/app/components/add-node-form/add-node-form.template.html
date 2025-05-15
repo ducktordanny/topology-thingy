@@ -1,0 +1,40 @@
+<form [formGroup]="formGroup" (submit)="onSubmit($event)">
+  <mat-form-field>
+    <mat-label>ID</mat-label>
+    <input matInput formControlName="id" type="text" required />
+    @if (formGroup.controls.id.hasError('nonUniqueNodeId')) {
+    <mat-error>ID must be unique.</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Owner</mat-label>
+    <input matInput formControlName="owner" type="text" required />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Version</mat-label>
+    <input matInput formControlName="version" type="text" required />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select required formControlName="status">
+      <mat-option [value]="MachineStatus.UP">Up</mat-option>
+      <mat-option [value]="MachineStatus.DOWN">Down</mat-option>
+      <mat-option [value]="MachineStatus.UNKNOWN">Unknown</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Target</mat-label>
+    <mat-select formControlName="target">
+      @for (target of availableTargets(); track target) {
+      <mat-option [value]="target">{{target}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button
+    mat-flat-button
+    type="submit"
+    [disabled]="formGroup.invalid || formGroup.pristine"
+  >
+    Add
+  </button>
+</form>

@@ -18,7 +18,7 @@ export class FakeApiService {
     {
       id: 'Bela',
       position: {
-        x: 100,
+        x: 300,
         y: 100,
       },
       data: {

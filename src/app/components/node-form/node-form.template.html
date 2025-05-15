@@ -30,6 +30,7 @@
       }
     </mat-select>
   </mat-form-field>
+  @if (!dialogData) {
   <button
     mat-flat-button
     type="submit"
@@ -37,4 +38,23 @@
   >
     Add
   </button>
+  } @else {
+  <div class="edit-buttons">
+    <button
+      mat-flat-button
+      type="submit"
+      [disabled]="formGroup.invalid || formGroup.pristine"
+    >
+      Update
+    </button>
+    <button
+      mat-flat-button
+      type="button"
+      class="remove-button"
+      (click)="removeNode()"
+    >
+      Remove
+    </button>
+  </div>
+  }
 </form>

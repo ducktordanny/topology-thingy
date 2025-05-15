@@ -4,10 +4,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 
-import { TopologyNode } from './components/topology/topology.type';
 import { TopologyComponent } from './components/topology/topology.component';
 import { FakeApiService } from './services/fake-api.service';
-import { AddNodeFormComponent } from './components/add-node-form/add-node-form.component';
+import { NodeFormComponent } from './components/node-form/node-form.component';
+import { TopologyNode } from './components/topology/topology.type';
 
 @Component({
   selector: 'app-root',
@@ -20,10 +20,10 @@ export class AppComponent {
   private readonly dialog = inject(MatDialog);
 
   protected onAddNode() {
-    this.dialog.open(AddNodeFormComponent, {});
+    this.dialog.open(NodeFormComponent);
   }
 
   protected showDetails(node: TopologyNode): void {
-    console.log(node);
+    this.dialog.open(NodeFormComponent, { data: node });
   }
 }

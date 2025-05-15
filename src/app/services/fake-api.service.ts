@@ -65,12 +65,42 @@ export class FakeApiService {
     return this._links.asReadonly();
   }
 
-  updateNodes(node: MachineTopologyNode): void {
+  addNewNode(node: MachineTopologyNode, link: TopologyLink | null): void {
     this._nodes.update((nodes) => [...nodes, node]);
+    if (link) this.addNewLink(link);
   }
 
-  updateLinks(link: TopologyLink): void {
+  addNewLink(link: TopologyLink): void {
     this._links.update((links) => [...links, link]);
+  }
+
+  updateNode(
+    id: string,
+    newNode: MachineTopologyNode,
+    newLink: TopologyLink | null,
+  ): void {
+    this._nodes.update((nodes) =>
+      nodes.map((node) => (node.id === id ? newNode : node)),
+    );
+    this.updateLink(id, newNode.id, newLink);
+  }
+
+  updateLink(
+    oldSource: string,
+    newSource: string,
+    newLink: TopologyLink | null,
+  ): void {
+    if (!this._links().length && newLink) this._links.set([newLink]);
+    this._links.update((links) =>
+      links
+        .map((link) => {
+          if (link.target === oldSource) return { ...link, target: newSource };
+          if (link.source === oldSource)
+            return newLink ? newLink : { ...link, source: newSource };
+          return link;
+        })
+        .filter((link) => !(link.source === newSource && newLink === null)),
+    );
   }
 
   removeNode(id: string): void {
@@ -80,17 +110,28 @@ export class FakeApiService {
     );
   }
 
-  uniqueIdValidator(): ValidatorFn {
-    return (control: AbstractControl<string>): ValidationErrors | null => {
-      const id = control.value;
-      const isUsed = this._nodes().some((node) => node.id === id);
-      return isUsed ? { nonUniqueNodeId: true } : null;
-    };
-  }
-
-  getFreeTargetIds(): Array<string> {
+  getFreeTargetIds(editedId?: string): Array<string> {
     return this._nodes()
       .map((node) => node.id)
-      .filter((id) => !this._links().some((link) => link.target === id));
+      .filter(
+        (id) =>
+          !this._links().some(
+            (link) => link.target === id && link.source !== editedId,
+          ) && id !== editedId,
+      );
+  }
+
+  getTargetBySource(id: string): string | null {
+    return this._links().find((link) => link.source === id)?.target || null;
+  }
+
+  uniqueIdValidator(editedId?: string): ValidatorFn {
+    return (control: AbstractControl<string>): ValidationErrors | null => {
+      const id = control.value;
+      const isUsed = this._nodes().some(
+        (node) => node.id !== editedId && node.id === id,
+      );
+      return isUsed ? { nonUniqueNodeId: true } : null;
+    };
   }
 }

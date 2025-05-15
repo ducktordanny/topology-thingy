@@ -1,0 +1,17 @@
+form {
+  padding: 16px;
+
+  mat-form-field {
+    width: 100%;
+    margin: 4px;
+  }
+
+  .edit-buttons {
+    display: flex;
+    justify-content: space-between;
+
+    .remove-button {
+      background: red;
+    }
+  }
+}

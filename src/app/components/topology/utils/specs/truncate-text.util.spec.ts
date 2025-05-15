@@ -19,7 +19,6 @@ describe('truncateSVGText', () => {
   it('should not truncate text', () => {
     baseMockText = 'AAAA';
     truncateSVGText(selfMockLongText as any, 100, 8);
-    console.log(baseMockText);
     expect(baseMockText).toBe('AAAA');
   });
 });

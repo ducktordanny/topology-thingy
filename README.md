@@ -1,7 +1,5 @@
 # TopologyThingy
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.6.
-
 ## Development server
 
 To start a local development server, run:
@@ -11,20 +9,6 @@ ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
 
 ## Building
 
@@ -44,16 +28,38 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ng test
 ```
 
-## Running end-to-end tests
+## Project Details
 
-For end-to-end (e2e) testing, run:
+### Topology
 
-```bash
-ng e2e
-```
+The project uses d3.js for creating the topology diagram. I've created a `TopologyComponet` which can be seen at `./src/app/components/topology`, this coponent has a few inputs that we can use for minimal customization:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- nodes: the boxes of the topology
+- links: the links between the boxes
+- nodeSize: the size of the boxes
+- nodePadding: padding inside the box, so its text is cool
+- margin: the distance the boxes should keep on dragging
 
-## Additional Resources
+And an output:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- nodeClick: this sends an emit if the box was clicked, and sends back its details
+
+### Node Form
+
+With the `NodeFormComponent` we can add, edit and delete nodes and their links. For this, I used Material to save some time.
+
+### Fake Api
+
+For providing a base example and handle data I created the `FakeApiService`, it works via signals, and provides the `nodes` and `links`.
+
+### Tests
+
+I tried to include a few unit tests here and there, I wouldn't have had time to finish all of them unfortunatelly.
+
+They can be run with `yarn test` as mentioned above.
+
+### Possible future improvements
+
+- Handle better adding new nodes, right now it adds every new node to a fixed position
+- On update keep position
+- Make two-way connections more obvious
